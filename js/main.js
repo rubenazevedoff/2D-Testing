@@ -50,60 +50,13 @@ MAIN = {
 			[1,1,1,1,1,1,1,1,1]
 		];
 
-		for(i=0; i<this.map.length; i++) {
-			for(j=0; j<this.map[i].length; j++) {
-				if(this.map[i][j] === 0) {
-					this.context.drawImage(this.grass, posX, posY, this.tileSize, this.tileSize);
-				}
-				if(this.map[i][j] === 1) {
-					this.context.drawImage(this.rock, posX, posY, this.tileSize, this.tileSize);
-				}
-				posX += this.tileSize;
-			}
-			posX = 0;
-			posY += this.tileSize;
-		}
+		this.renderMap();
 
 		this.initChar();
 		this.bindMovement();
 	},
 
-	initChar: function() {
-		this.charX = 4*this.tileSize;
-		this.charY = 3*this.tileSize;
-
-		this.context.drawImage(this.char, this.charX, this.charY, this.tileSize, this.tileSize);
-	},
-
-	bindMovement: function(e) {
-		window.addEventListener('keyup', this.movement.bind(this));
-	},
-
-	movement: function(e) {
-		var code = e.keyCode;
-
-		if(code === 38) {
-			this.clean();
-			this.context.drawImage(this.char,  this.charX, this.charY-=32, this.tileSize, this.tileSize);
-		}
-
-		if(code === 39) {
-			this.clean();
-			this.context.drawImage(this.char, this.charX+=32, this.charY, this.tileSize, this.tileSize);
-		}
-
-		if(code === 40) {
-			this.clean();
-			this.context.drawImage(this.char,  this.charX, this.charY+=32, this.tileSize, this.tileSize);
-		}
-
-		if(code === 37) {
-			this.clean();
-			this.context.drawImage(this.char, this.charX-=32, this.charY, this.tileSize, this.tileSize);
-		}
-	},
-
-	clean: function() {
+	renderMap: function() {
 		var i=0,
 			j=0,
 			posX=0,
@@ -121,6 +74,41 @@ MAIN = {
 			}
 			posX = 0;
 			posY += this.tileSize;
+		}
+	},
+
+	initChar: function() {
+		this.charX = 4*this.tileSize;
+		this.charY = 3*this.tileSize;
+
+		this.context.drawImage(this.char, this.charX, this.charY, this.tileSize, this.tileSize);
+	},
+
+	bindMovement: function(e) {
+		window.addEventListener('keyup', this.movement.bind(this));
+	},
+
+	movement: function(e) {
+		var code = e.keyCode;
+
+		if(code === 38) {
+			this.renderMap();
+			this.context.drawImage(this.char,  this.charX, this.charY-=32, this.tileSize, this.tileSize);
+		}
+
+		if(code === 39) {
+			this.renderMap();
+			this.context.drawImage(this.char, this.charX+=32, this.charY, this.tileSize, this.tileSize);
+		}
+
+		if(code === 40) {
+			this.renderMap();
+			this.context.drawImage(this.char,  this.charX, this.charY+=32, this.tileSize, this.tileSize);
+		}
+
+		if(code === 37) {
+			this.renderMap();
+			this.context.drawImage(this.char, this.charX-=32, this.charY, this.tileSize, this.tileSize);
 		}
 	}
 }
